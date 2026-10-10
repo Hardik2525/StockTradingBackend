@@ -146,7 +146,7 @@ public class UserService {
      * @return
      */
     private AuthResponse buildAuthResponse(User user , String token,String refreshToken){
-        AuthResponse response = AuthResponse.builder()
+       return AuthResponse.builder()
                 .userId(user.getId())
                 .email(user.getEmail())
                 .firstName(user.getFirstName())
@@ -155,7 +155,6 @@ public class UserService {
                 .refreshToken(refreshToken)
                 .walletBalance(user.getWalletBalance())
                 .build();
-        return response;
     }
 
     /*
@@ -180,7 +179,7 @@ public class UserService {
      * @param userId
      * @return
      */
-    public UserResponse getUserId(String userId){
+    public UserResponse getUserById(String userId){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found: " + userId));
         return UserResponse.builder()

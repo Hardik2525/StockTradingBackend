@@ -1,4 +1,4 @@
-package com.trading.marketdata_ervice;
+package com.trading.marketdata_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
