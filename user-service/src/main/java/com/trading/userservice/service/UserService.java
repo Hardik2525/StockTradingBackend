@@ -7,7 +7,6 @@ import com.trading.userservice.entity.User;
 import com.trading.userservice.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import io.jsonwebtoken.io.Decoders;
@@ -16,8 +15,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
-import java.security.Key;
 import java.util.Date;
+import javax.crypto.SecretKey;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,11 +101,11 @@ public class UserService {
                 .claim("userId", userId).subject(email).issuedAt(new Date()).expiration(new Date(
                         System.currentTimeMillis() + jwtExpiration
                 ))
-                .signWith(getSignInKey(),SignatureAlgorithm.HS256)
+                .signWith(getSignInKey(), Jwts.SIG.HS256)
                 .compact();
     }
 
-    private Key getSignInKey(){
+    private SecretKey getSignInKey(){
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -114,17 +113,19 @@ public class UserService {
     private String generateRefreshToken(String userId){
         return Jwts.builder()
                 .claim("userId", userId).subject(userId).issuedAt(new Date()).expiration(new Date(System.currentTimeMillis() + refreshExpiration))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInKey(), Jwts.SIG.HS256)
                 .compact();
     }
 
 
     private AuthResponse buildAuthResponse(User user , String token,String refreshToken){
         AuthResponse response = AuthResponse.builder()
-                .userId()
-                .email()
-                .firstName()
-                .lastName()
-
+                .userId(user.getId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .token(token)
+                .refreshToken(refreshToken)
+                .build();
     }
 }
