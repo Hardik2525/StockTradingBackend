@@ -107,7 +107,7 @@ public class MarketDataService {
                 redisTemplate.opsForValue().set(PRICE_KEY_PREFIX + symbol, currentPrice);
 
                 // Broadcast via websocket -> all clients
-                simpMessagingTemplate.convertAndSend("/topic/prices" + symbol, currentPrice);
+                simpMessagingTemplate.convertAndSend("/topic/prices/" + symbol, currentPrice);
 
                 // Publish to Kafka
                 Map<String,Object> priceUpdatedEvent = new HashMap<>();
@@ -119,7 +119,7 @@ public class MarketDataService {
             log.info("Prices updated successfully");
         }
 
-        public StockPrice getStockPrice(String symbol){
+        public StockPrice getPrice(String symbol){
             Object cachedPrice = redisTemplate.opsForValue().get(PRICE_KEY_PREFIX + symbol);
             if(cachedPrice != null){
                 return (StockPrice) cachedPrice;

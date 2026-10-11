@@ -1,6 +1,6 @@
 package com.trading.marketdata_service.controller;
 
-import com.trading.marketdata_service.controller.entity.Stock;
+import com.trading.marketdata_service.entity.Stock;
 import com.trading.marketdata_service.dto.StockPrice;
 import com.trading.marketdata_service.service.MarketDataService;
 import lombok.RequiredArgsConstructor;
