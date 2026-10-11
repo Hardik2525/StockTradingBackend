@@ -2,6 +2,7 @@ package com.trading.orderservice.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
 import java.math.BigDecimal;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import jakarta.persistence.Column;
 @Entity
 @Table(name = "orders")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
