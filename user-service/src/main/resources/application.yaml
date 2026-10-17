@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/user_db?createDatabaseIfNotExist=true
     username: root
-    password: root
+    password: p75OZ0n7ojhp+
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -28,9 +28,9 @@ server:
   port: 8080
 
 jwt:
-  secret: ${JWT_SECRET}
-  expiration: ${JWT_EXPIRATION}
-  refresh-expiration: ${JWT_REFRESH_EXPIRATION}
+  secret: Py+iM0RLDoelxAJ3SZxL5L1z7jujb2WFzT6WfLp08AY=
+  expiration: 86400000
+  refresh-expiration: 604800000
 
 management:
   endpoints:
