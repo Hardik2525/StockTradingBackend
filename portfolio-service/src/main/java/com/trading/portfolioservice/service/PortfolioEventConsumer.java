@@ -1,6 +1,5 @@
 package com.trading.portfolioservice.service;
 
-import org.springframework.boot.web.server.servlet.context.ServletComponentScan;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -26,17 +25,16 @@ public class PortfolioEventConsumer {
             String type = (String) payload.get("type");
             int quantity = (int) payload.get("quantity");
             BigDecimal price = new BigDecimal((String) payload.get("price"));
-           log.info("Updating portfolio for user {} {} {} * {} {}", userId, symbol, type, quantity, price);
-           if("BUY".equals(type)){{
+            log.info("Updating portfolio for user {} {} {} * {} {}", userId, symbol, type, quantity, price);
+           if("BUY".equals(type)){
             addHolding(userId, symbol, quantity, price);
-           }else if("SELL".equals(type)){{
-            removeHolding(userId, symbol, quantity, price);
            }
+           else if("SELL".equals(type)){
+            removeHolding(userId, symbol, quantity, price);
            }else{
             log.warn("Invalid order type: {}", type);
            }
            log.info("Portfolio updated for user {}", userId);
-        }
         }
         catch(Exception e){
             log.error("Error consuming order execution: {}", e.getMessage());

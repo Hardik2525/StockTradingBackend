@@ -1,5 +1,6 @@
 package com.trading.portfolioservice.service;
 
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.stereotype.Service;
 
 import com.trading.portfolioservice.Repository.HoldingRepository;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@EnableFeignClients
 public class PortfolioService {
     private final HoldingRepository holdingRepository;
     private final MarketDataClient marketDataClient;
