@@ -8,6 +8,6 @@ import java.util.Map;
 @FeignClient(name = "market-data-service", url = "${market.service.url}")
 public interface MarketDataClient {
 
-    @GetMapping("api/v1/market/stocks/{symbol}")
+    @GetMapping("/api/v1/market/stocks/{symbol}")
     Map<String,Object> getStockPrice(@PathVariable String symbol);
 }

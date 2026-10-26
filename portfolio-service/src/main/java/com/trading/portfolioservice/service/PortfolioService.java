@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@EnableFeignClients
 public class PortfolioService {
     private final HoldingRepository holdingRepository;
     private final MarketDataClient marketDataClient;
