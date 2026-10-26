@@ -7,6 +7,8 @@ import com.trading.marketdata_service.dto.StockPrice;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,18 +26,20 @@ import org.springframework.kafka.core.KafkaTemplate;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MarketDataService {
+@Order(2)
+public class MarketDataService implements CommandLineRunner {
 
     private final StockRepository stockRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private static final String PRICE_KEY_PREFIX = "stock:price:";
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private static final String PRICE_UPDATED_TOPIC = "stock:price:updated";
+    private static final String PRICE_UPDATED_TOPIC = "stock.price.updated";
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final Map<String, StockPrice> stockPrices = new ConcurrentHashMap<>();
     private final Random random = new Random();
-    @PostConstruct
-    public void initializePrices(){
+
+    @Override
+    public void run(String...args){
         log.info("Loading Stock Data.....");
 
         List<Stock> stocks = stockRepository.findByActiveTrue();
